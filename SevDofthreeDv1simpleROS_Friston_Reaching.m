@@ -11,60 +11,18 @@ rosshutdown;
 rosinit;
 
 
-%%
-
-% [f]= spm_fx_robot_dem_reach(M(1).x,M(2).v,1)
-% [g]= spm_gx_robot_dem_reach(M(1).x,M(2).v,1)
-
-% hidden causes and states
-%==========================================================================
-% x    - hidden states
-%   x(1) - joint angle
-%   x(2) - joint angle
-%   x(3) - joint angle
-%   x(4) - joint angle
-%   x(5) - joint angle
-%   x(6) - joint angle
-%   x(7) - joint angle
-%   x(8) - angular velocity
-%   x(9) - angular velocity
-%   x(10) - angular velocity
-%   x(11) - angular velocity
-%   x(12) - angular velocity
-%   x(13) - angular velocity
-%   x(14) - angular velocity
-
-% v    - causal states
-%   v(1) - target location (x)
-%   v(2) - target location (y)
-%   v(3) - target location (z)
-
 %--------------------------------------------------------------------------
 
 
 %% Initial position of the arm and its command          
 
- posinit = 0*ones(7,1);
- %posinit=[0;0.5;0;-1.2;0;0;0];%
 posinit=[0;0.75;0;-0.75;0;0;0];
 MoveArmPR2(posinit);
 
 %% Computation of the target into 3D space
-
 postarget=-0.25*ones(7,1);
-%postarget = [0.25;0;0;0;0;0;0];
-%postarget = [-0.25;0;0;-1.2;0;0;0];
 T = PosEndEffectorPR2(postarget);% + [0.1;0;0.1];
-  %T=[  0.922; -0.3; 0.8104];
-%T = [0.299518357400412;-0.0878421088907614;1.26398698369552]; % target
-% T= [0.875760639397086;-0.087461266084378;0.945744158507774]% target woth O angular position
-%T= [0.744959358640662;-0.087548304221726;1.278190021757128];
-%T=[ 0.5265;   -0.0877;    0.8352];
-%T=[0.232537787815623;-0.188000000000000;1.53064572241108];
-%T=[0.771000000000000;-0.188000000000000;0.802172854475482]
-%T=[0.7193;  -0.1880;   0.5493]
-%T =  [   0.7193; -0.1880;  1.0550]
-
+ 
 
 
 % Recognition model (linear for expediency)
@@ -114,7 +72,6 @@ C       = sparse(3,N);
 C(1,:)  = C(1,:) + T(1);                        % desired x
 C(2,:)  = C(2,:) + T(2);                        % desired y
 C(3,:)  = C(3,:) + T(3);                        % cue strength
-%C(4,:)  = exp(-((1:N) - 32).^2/(8.^2));                         % cue strength
 
 M(2).v  = C(:,1);
  
@@ -127,12 +84,6 @@ DEM.U   = sparse(3,N);
 % % Test nosiy information
 % enable precision optimization
 %--------------------------------------------------------------------------
-% Q{1}       = diag([1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0]);
-% Q{2}       = diag([0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1]);
-% M(1).E.nE  = 5;
-% M(1).E.nM  = 8;
-% M(1).V     = diag(exp([0 0 0 0 0 0 0 0 0 0 0 0 0 0 8 8 8 0 0 0]));               % error precision
-% M(1).Q     = Q;                                        % error components
  
 Q{1}       = diag([1 1 1 1 1 1 1 0 0 0 0 0 0]);
 Q{2}       = diag([0 0 0 0 0 0 0 0 0 0 1 1 1]);
@@ -140,29 +91,6 @@ M(1).E.nE  = 4;
 M(1).E.nM  = 8;
 M(1).V     = diag(exp([0 0 0 0 0 0 0 8 8 8 0 0 0]));               % error precision
 M(1).Q     = Q;   
-
-% % un-noisy
-%--------------------------------------------------------------------------
-% G(1).V     = diag(exp([8 8 16 16 16 8 8]));            % error precision
-% M(1).hE    = [8 8];
-% DEM(1,1)   = DEM(1,1);
-% DEM(1,1).G = G;
-% DEM(1,1).M = M;
-% DEM(1,1)   = spm_ADEM(DEM(1,1));
-
-% un-noisy
-%--------------------------------------------------------------------------
-% G(1).V     = diag(exp([8 8 8 8 8 8 8 8 8 8 8 8 8 8 16 16 16 8 8 8]));            % error precision
-% M(1).hE    = [8 8];
-% DEM.G = G;
-% DEM.M = M;
-% DEM   = SevDofthreeDv1ROS_spm_ADEM(DEM);
-% % 
-% G(1).V     = diag(exp([8 8 8 8 8 8 8 16 16 16 8 8 8]));            % error precision
-% M(1).hE    = [8 8];
-% DEM.G = G;
-% DEM.M = M;
-% DEM   = SevDofthreeDv1ROS_spm_ADEM(DEM);
 
 % Vision noise
 G(1).V     = diag(exp([8 8 8 8 8 8 8 16 16 16 4 4 4]));            % error precision
@@ -180,21 +108,6 @@ DEM   = SevDofthreeDv1ROS_spm_ADEM(DEM);
 % DEM   = SevDofthreeDv1ROS_spm_ADEM(DEM);
 % % %DEM=DEM(2,2);
 
-% precis=4;
-% G(1).V     = diag(exp([precis precis precis precis precis precis precis 16 16 16 precis precis precis]));            % error precision
-% M(1).hE    = [precis precis];
-% DEM.G = G;
-% DEM.M = M;
-% DEM   = SevDofthreeDv1ROS_spm_ADEM(DEM);
-%DEM=DEM(2,2);
-
-% precis=0.5
-% G(1).V     = diag(exp([precis precis precis precis precis precis precis precis precis precis precis precis precis precis 16 16 16 precis precis precis]));            % error precision
-% M(1).hE    = [precis precis];
-% DEM.G = G;
-% DEM.M = M;
-% DEM   = SevDofthreeDv1ROS_spm_ADEM(DEM);
-%DEM=DEM(2,2);
 
 
 % overlay true values
@@ -225,9 +138,6 @@ subplot(2,1,1)
 spm_dem_reach_plot(DEM)
 title('trajectory','FontSize',16)
  
-% subplot(2,1,2)
-% spm_dem_reach_movie(DEM)
-% title('click on finger for movie','FontSize',16)
 
  try
         gazebo = ExampleHelperGazeboCommunicator();
@@ -335,77 +245,3 @@ return
  
  
  
-% further simulations for paper
-%==========================================================================
- 
-% enable precision optimization
-%--------------------------------------------------------------------------
-Q{1}       = diag([1 1 0 0 0 0 0]);
-Q{2}       = diag([0 0 0 0 0 1 1]);
-M(1).E.nE  = 4;
-M(1).E.nM  = 8;
-M(1).V     = diag(exp([0 0 8 8 8 0 0]));               % error precision
-M(1).Q     = Q;                                        % error components
- 
- 
-% un-noisy
-%--------------------------------------------------------------------------
-G(1).V     = diag(exp([8 8 16 16 16 8 8]));            % error precision
-M(1).hE    = [8 8];
-DEM(1,1)   = DEM(1,1);
-DEM(1,1).G = G;
-DEM(1,1).M = M;
-DEM(1,1)   = spm_ADEM(DEM(1,1));
- 
-% noisy position
-%--------------------------------------------------------------------------
-G(1).V     = diag(exp([8 8 16 16 16 4 4]));            % error precision
-M(1).hE    = [8 4];
-DEM(1,2)   = DEM(1,1);
-DEM(1,2).G = G;
-DEM(1,2).M = M;
-DEM(1,2)   = spm_ADEM(DEM(1,2));
- 
-% noisy proprioception
-%--------------------------------------------------------------------------
-G(1).V     = diag(exp([4 4 16 16 16 8 8]));            % error precision
-M(1).hE    = [4 8];
-DEM(2,1)   = DEM(1,1);
-DEM(2,1).G = G;
-DEM(2,1).M = M;
-DEM(2,1)   = spm_ADEM(DEM(2,1));
- 
-% noisy proprioception and position
-%--------------------------------------------------------------------------
-G(1).V     = diag(exp([4 4 16 16 16 4 4]));            % error precision
-M(1).hE    = [4 4];
-DEM(2,2)   = DEM(1,1);
-DEM(2,2).G = G;
-DEM(2,2).M = M;
-DEM(2,2)   = spm_ADEM(DEM(2,2));
- 
-% show noisy proprioception
-%--------------------------------------------------------------------------
-spm_DEM_qU(DEM(2,1).qU,DEM(2,1).pU)
- 
- 
-% overlay true values
-%==========================================================================
-spm_figure('GetWin','Figure 2');
-clf
- 
-for i = 1:2
-    for j = 1:2
-        subplot(2,2,(j - 1)*2 + i)
-        spm_dem_reach_plot(DEM(i,j))
-    end
-end
- 
-clf
-for i = 1:2
-    for j = 1:2
-        subplot(4,4,(j - 1)*2 + i)
-        bar(DEM(i,j).qH.h{1})
-        set(gca,'YLim',[0 10])
-    end
-end
