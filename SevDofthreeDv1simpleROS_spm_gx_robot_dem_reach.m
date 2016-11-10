@@ -1,20 +1,5 @@
 function [g]= SevDofthreeDv1simpleROS_spm_gx_robot_dem_reach(x,v,P)
-% returns the prediction for a two-joint arm
-% FORMAT [g]= spm_gx_dem_reach(x,v,P)
-%
-% x    - hidden states
-%   x(1) - joint angle
-%   x(2) - joint angle
-%   x(3) - angular velocity
-%   x(4) - angular velocity
-% v    - causal states
-%   v(1) - target location (x)
-%   v(2) - target location (y)
-%   v(3) - force (cue strength)
-% P    - parameters
 
-
-% evaluate positions
 
 
 % stretch (angular) and visual (positional) information (target & arm)
@@ -70,7 +55,6 @@ testreq.RobotState.JointState.Name = pr2Joints(30:36);
 %vel = x(8:14);
 
 testreq.RobotState.JointState.Position=x(1:7);
-%testreq.RobotState.JointState.Velocity =vel;
 sumresp = call(testclient,testreq,'Timeout',200);
 X=sumresp.PoseStamped.Pose.Position.X;
 Y=sumresp.PoseStamped.Pose.Position.Y;
