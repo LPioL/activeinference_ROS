@@ -41,44 +41,6 @@ x = full(x);
 % clear pub message
 %[X,velocity,effort] = JointStates();
 
-% 
-%      f  = [(x(1)+a(1));     % velocities
-%            (x(2)+a(2));
-%            (x(3)+a(3));  % accelerations
-%            (x(4)+a(4))
-%       ]
-% %   
-%      f  = [(a(1));  % accelerations
-%         (a(2));
-%         (a(3)); 
-%         (a(4));
-%         (a(5));  
-%         (a(6));
-%         (a(7));
-%         a(8);     % velocities
-%         a(9);
-%         a(10);
-%         a(11);
-%         a(12);
-%         a(13);
-%         a(14);
-%          
-%       ];
-%   
-%   f  = [x(8);     % velocities
-%         x(9);
-%         x(10);
-%         x(11);
-%         x(12);
-%         x(13);
-%         x(14);
-%         (a(1));  % accelerations
-%         (a(2));
-%         (a(3));
-%         (a(4));
-%         (a(5));
-%         (a(6));
-%         (a(7));];
 
 
 
@@ -89,74 +51,9 @@ elasticity=1.5; % elasticity
 m1=4;
 m2=3;
 
-% 
-% 
-%       f  = [x(8);     % velocities
-%         x(9);
-%         x(10);
-%         x(11);
-%         x(12);
-%         x(13);
-%         x(14);
-%        (a(1)-k6*k3*x(8)-k5*k3*(x(1)-pi/2))/10;     % velocities
-%        (a(2)-k6*k3*x(9)-k5*k3*(x(2)-pi/2))/10;
-%        (a(3)-k6*k3*x(10)-k5*k3*(x(3)-pi/2))/10;
-%        (a(4)-k6*k4*x(11)-k5*k4*(x(4)-pi/2))/10;
-%        (a(5)-k6*k4*x(12)-k5*k4*(x(5)-pi/2))/10;  
-%        (a(6)-k6*k4*x(13)-k5*k4*(x(6)-pi/2))/10;
-%        (a(7)-k6*k4*x(14)-k5*k4*(x(7)-pi/2))/10];
+
    
-%    
-%          f  = [x(8);     % velocities
-%         x(9);
-%         x(10);
-%         x(11);
-%         x(12);
-%         x(13);
-%         x(14);
-%        (a(1)-visco*k3*x(8)-elasticity*(x(1)-pi/2))/m;     
-%        (a(2)-visco*k3*x(9)-elasticity*(x(2)-pi/2))/m;
-%        (a(3)-visco*k3*x(10)-elasticity*(x(3)-pi/2))/m;
-%        (a(4)-visco*k4*x(11)-elasticity*(x(4)-pi/2))/m;
-%        (a(5)-visco*k4*x(12)-elasticity*(x(5)-pi/2))/m;  
-%        (a(6)-visco*k4*x(13)-elasticity*(x(6)-pi/2))/m;
-%        (a(7)-visco*k4*x(14)-elasticity*(x(7)-pi/2))/m]
-    
-%     f  = [x(8);     % velocities
-%         x(9);
-%         x(10);
-%         x(11);
-%         x(12);
-%         x(13);
-%         x(14);
-%         (a(1)-k3*x(8));  % accelerations
-%         (a(2)-k3*x(9));
-%         (a(3)-k3*x(10)); 
-%         (a(4)-k4*x(11));
-%         (a(5)-k4*x(12));  
-%         (a(6)-k4*x(13));
-%         (a(7)-k4*x(14))];  
-    
-   
-    
-    
-%              f  = [x(8);     % velocities
-%         x(9);
-%         x(10);
-%         x(11);
-%         x(12);
-%         x(13);
-%         x(14);
-%        (a(1)-visco*k3*x(8)-elasticity*(x(1)-pi/2))/m1;     
-%        (a(2)-visco*k3*x(9)-elasticity*(x(2)-pi/2))/m1;
-%        (a(3)-visco*k3*x(10)-elasticity*(x(3)-pi/2))/m1;
-%        (a(4)-visco*k4*x(11)-elasticity*(x(4)-pi/2))/m2;
-%        (a(5)-visco*k4*x(12)-elasticity*(x(5)-pi/2))/m2;  
-%        (a(6)-visco*k4*x(13)-elasticity*(x(6)-pi/2))/m2;
-%        (a(7)-visco*k4*x(14)-elasticity*(x(7)-pi/2))/m2];
-   
-   
-                f  = [x(8);     % velocities
+ f  = [x(8);     % velocities
         x(9);
         x(10);
         x(11);
