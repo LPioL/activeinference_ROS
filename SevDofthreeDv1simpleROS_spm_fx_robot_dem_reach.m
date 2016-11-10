@@ -46,11 +46,9 @@ end
 testreq = rosmessage(testclient);
 testreq.Header.FrameId = 'base_footprint';
 testreq.RobotState.JointState.Name = pr2Joints(30:36);
-%testreq.RobotState.MultiDOFJointState.JointNames = cell(pr2Joints(30:36));
 
 
 testreq.RobotState.JointState.Position=x(1:7);
-%x(4)=-0.4;
 
 for i = 1: size(LinkNames,1)
 
@@ -80,26 +78,12 @@ PoseEndEffector = ALL(:,end);
 
 
 %% Computation of the error and then the needed accelerations on order to reach the target
-%dist = sqrt(sum((Target - PoseEndEffector).^2));
 
 
 k=2.5;
 k2= 1/750;
-% % if dist <0.1
-%  k=k/500;
-% k2= k2/2; 
-% end
-% if dist <0.05
-%  k=k/2000;
-% k2= k2/2; 
-% end
-
 acc = zeros(size(ALL,2),1);
-%pos = zeros(size(ALL,2),1);
-
-
 vec_phy = ( Target - PoseEndEffector);
-%vec_phy =  -(Target - PoseEndEffector);
 
 
 
@@ -128,15 +112,9 @@ for i = size(ALL,2)-1:-1:1
     %     vel(i) =  k1*dot(vec_phy,vec_ortho);
     pos(i) =  k2*dot(vec_phy,vec_ortho);
     
-    % mise à jour de vec_phy
-    %vec_phy = vec_ortho * dot(vec_phy,vec_ortho);
     
 end
 
-
-% For test
-% pos;
-% acc;
 
 visco = 1;
 m1=4;
@@ -164,11 +142,6 @@ k4 = 3.21;
        (acc(7)-visco*k4*x(14))/m2;
        ];
 
-% f  = [pos(2);  % accelerations
-%     (pos(4));
-%     acc(2);     % velocities
-%     acc(4);
-%     ]
 
 
 
