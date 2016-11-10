@@ -10,37 +10,12 @@ function [f]= SevDofthreeDv1simpleROS_spm_fx_robot_adem_reach(x,v,a,P)
 % v    - cue locations and strength
 % a    - action (forces) (x,y)
 % P    - parameters
-%__________________________________________________________________________
-% Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
- 
-% Karl Friston
-% $Id: spm_fx_adem_reach.m 3893 2010-05-17 18:28:52Z karl $
 
-% evaluate positions
-%--------------------------------------------------------------------------
-% 
 
 
 
 a = full(a);
 x = full(x);
-% pub = rospublisher('/r_arm_controller/command',rostype.trajectory_msgs_JointTrajectory);
-% message = rosmessage('trajectory_msgs/JointTrajectory');
-% message.JointNames = {'r_shoulder_pan_joint';'r_shoulder_lift_joint';'r_upper_arm_roll_joint';
-%     'r_elbow_flex_joint';'r_forearm_roll_joint';'r_wrist_flex_joint';'r_wrist_roll_joint'} ;
-% point=rosmessage('trajectory_msgs/JointTrajectoryPoint');
-% message.Points=point;
-% pos = [0;x(1);0;x(2);0;0;0];
-% velo =  [0;x(3);0;x(4);0;0;0];
-% %acc = [0.5;0.5;0;0;0;0;0];
-% message.Points.Positions = pos;
-% message.Points.Velocities = velo;
-% message.Points.Accelerations =  [0;a(1);0;a(2);0;0;0];
-% send(pub,message)
-% pause (10)
-% clear pub message
-%[X,velocity,effort] = JointStates();
-
 
 
 
